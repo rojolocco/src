@@ -6,8 +6,8 @@ import torch.nn as nn
 from torch.nn import Parameter
 import torch.utils.model_zoo as model_zoo
 
-from se_module import SELayer
-from util_gcn import *
+from misc.se_module import SELayer
+from misc.util_gcn import *
 
 
 

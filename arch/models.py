@@ -6,10 +6,13 @@ import torch.nn as nn
 import torchvision
 import torch.nn.functional as F
 
-import nasnet
-import xception
-import pnasnet
-import xceptionFPN_multiscale,senet,inceptionv4A,xception_dropout
+from arch import inceptionv4A
+from arch import nasnet
+from arch import pnasnet
+from arch import senet
+from arch import xception
+from arch import xception_dropout
+from arch import xceptionFPN_multiscale
 
 
 class Xception(nn.Module):

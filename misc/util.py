@@ -13,9 +13,10 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from sklearn.metrics import  roc_curve, auc
 
-from read_data_challenge import CheXpertDataSet14,CheXpertDataSet_GCN, CheXpert
-from se_dense_gcn import SE_GCN_DenseNet121
-from models import Xception,NasNet,pNasNet,SEnet,InceptionV4,Xception_SA,Pnasnet_SA,Xception_FPN, Xception_GCN
+from misc.read_data_challenge import CheXpertDataSet14, CheXpertDataSet_GCN, CheXpert
+from misc.se_dense_gcn import SE_GCN_DenseNet121
+from arch.models import Xception, NasNet, pNasNet, SEnet, InceptionV4
+from arch.models import Xception_SA, Pnasnet_SA, Xception_FPN, Xception_GCN
 
 
 def get_model():
