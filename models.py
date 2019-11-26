@@ -1,13 +1,16 @@
-import torch
 import numpy as np
+import pandas as pd
+
+import torch
 import torch.nn as nn
 import torchvision
 import torch.nn.functional as F
-import pandas as pd
+
 import nasnet
 import xception
 import pnasnet
 import xceptionFPN_multiscale,senet,inceptionv4A,xception_dropout
+
 
 class Xception(nn.Module):
     """Model modified.
@@ -27,6 +30,7 @@ class Xception(nn.Module):
         x = self.classifier(x)
         # we don't include sigmoid layer here
         return x#.reshape([len(x), self.num_labels, self.num_classes])
+
 
 class NasNet(nn.Module):
     """Model modified.
@@ -55,6 +59,7 @@ class NasNet(nn.Module):
         # x = self.classifier(x)
         # we don't include sigmoid layer here
         return x#.reshape([len(x), self.num_labels, self.num_classes])
+
 
 class pNasNet(nn.Module):
     """Model modified.
@@ -87,6 +92,7 @@ def conv3x3(in_planes, out_planes, stride=1):
     """3x3 convolution with padding"""
     return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
                      padding=1, bias=False)
+
 
 class SAModule(nn.Module):
     """
@@ -128,6 +134,7 @@ class SAModule(nn.Module):
 
         return feat_map
 
+
 class SeparableConv2d(nn.Module):
     def __init__(self,in_channels,out_channels,kernel_size=1,stride=1,padding=0,dilation=1,bias=False):
         super(SeparableConv2d,self).__init__()
@@ -139,6 +146,7 @@ class SeparableConv2d(nn.Module):
         x = self.conv1(x)
         x = self.pointwise(x)
         return x
+
 
 class Xception_FPN(nn.Module):
     """Model modified.
@@ -192,6 +200,7 @@ class Xception_FPN(nn.Module):
         # we don't include sigmoid layer here
         return x#.reshape([len(x), self.n
 
+
 class SEnet(nn.Module):
     """Model modified.
     The architecture of our model is the same as standard DenseNet121
@@ -221,6 +230,7 @@ class SEnet(nn.Module):
         # we don't include sigmoid layer here
         return x#.reshape([len(x), self.num_labels, self.num_classes])
 
+
 class InceptionV4(nn.Module):
     """Model modified.
     The architecture of our model is the same as standard DenseNet121
@@ -245,6 +255,7 @@ class InceptionV4(nn.Module):
         x = self.logits(x)
         # we don't include sigmoid layer here
         return x#.reshape([len(x), self.num_labels, self.num_classes])
+
 
 class Xception_SA(nn.Module):
     """Model modified.
@@ -276,6 +287,7 @@ class Xception_SA(nn.Module):
         # we don't include sigmoid layer here
         return x#.reshape([len(x), self.n
 
+
 class Pnasnet_SA(nn.Module):
     """Model modified.
     The architecture of our model is the same as standard DenseNet121
@@ -304,6 +316,7 @@ class Pnasnet_SA(nn.Module):
         # x = self.classifier(x)
         # we don't include sigmoid layer here
         return x#.reshape([len(x), self.num_labels, self.num_classes])
+
 
 class GraphConvolution(nn.Module):
     """
@@ -378,6 +391,7 @@ class GraphResConvolution(nn.Module):
 
     def __repr__(self):
         return self.__class__.__name__ + ' (' +  self.name + ')'
+
 
 class Xception_GCN(nn.Module):
     """Model modified.

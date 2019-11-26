@@ -1,12 +1,15 @@
-"""添加了senet模块,loop方式添加senet，不在transition和denselayer中加入senet"""
 import re
-import torch.nn as nn
-import torch.utils.model_zoo as model_zoo
-from collections import OrderedDict
-from se_module import SELayer
-from torch.nn import Parameter
-from util_gcn import *
 import math
+from collections import OrderedDict
+
+import torch.nn as nn
+from torch.nn import Parameter
+import torch.utils.model_zoo as model_zoo
+
+from se_module import SELayer
+from util_gcn import *
+
+
 
 class GraphConvolution(nn.Module):
     """

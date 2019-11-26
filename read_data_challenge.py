@@ -3,14 +3,14 @@
 """
 Read images and corresponding labels.
 """
-
-import torch
-from torch.utils.data import Dataset
-from PIL import Image
 import os
 import cv2
 import pandas as pd
 import numpy as np
+from PIL import Image
+
+import torch
+from torch.utils.data import Dataset
 
 
 def load_and_resize_img(path):
@@ -40,6 +40,7 @@ def load_and_resize_img(path):
 
     return resized_img
 
+
 class CheXpertDataSet_GCN(Dataset):
     def __init__(self, image_list_file, transform=None):
         df = pd.read_csv(image_list_file)
@@ -61,6 +62,7 @@ class CheXpertDataSet_GCN(Dataset):
     def __len__(self):
         return len(self.imagePaths)
 
+
 class CheXpertDataSet14(Dataset):
     def __init__(self,image_list_file, transform=None):
         df = pd.read_csv(image_list_file)
@@ -81,6 +83,39 @@ class CheXpertDataSet14(Dataset):
 
     def __len__(self):
         return len(self.imagePaths)
+
+
+# from albumentations import Resize
+class CheXpert(Dataset): #14类加载
+    def __init__(self, image_list_file, transform=None):
+        df = pd.read_csv(image_list_file)
+        self.transform = transform
+        self.imagePaths = []
+        for i, row in df.iterrows():
+            # self.imagePaths.append(os.path.join(data_dir,row['Path']))
+            self.imagePaths.append(row[0])
+
+    
+    def __getitem__(self, index):
+        self.image_size = 680
+        # print(self.imagePaths[index])
+        image = cv2.imread(self.imagePaths[index])
+        y, x, z = image.shape
+        if x > y:
+            resized_x, resized_y = self.image_size, int(y*self.image_size/x)
+        else:
+            resized_x, resized_y = int(x*self.image_size/y), self.image_size
+        # resize = Resize(resized_y, resized_x)
+        # image = resize(image=image)["image"]
+        image = cv2.resize(image, (resized_x, resized_y), interpolation=cv2.INTER_LINEAR)
+        image = np.pad(image, [[0, self.image_size - resized_y], [0, self.image_size - resized_x], [0, 0]], 'constant', constant_values=0)
+        image =self.transform(image)
+        image = (image - 0.5) / 0.5
+
+        return image #for 1-output, sigmoid, BCE
+    def __len__(self):
+        return len(self.imagePaths)
+
 
 # from scipy.ndimage.interpolation import zoom, rotate
 # from scipy.ndimage.filters import gaussian_filter
@@ -123,34 +158,3 @@ class CheXpertDataSet14(Dataset):
 #     return Image.fromarray(image.astype('uint8')).convert('RGB')
 
 
-
-# from albumentations import Resize
-class CheXpert(Dataset): #14类加载
-    def __init__(self, image_list_file, transform=None):
-        df = pd.read_csv(image_list_file)
-        self.transform = transform
-        self.imagePaths = []
-        for i, row in df.iterrows():
-            # self.imagePaths.append(os.path.join(data_dir,row['Path']))
-            self.imagePaths.append(row[0])
-
-    
-    def __getitem__(self, index):
-        self.image_size = 680
-        # print(self.imagePaths[index])
-        image = cv2.imread(self.imagePaths[index])
-        y, x, z = image.shape
-        if x > y:
-            resized_x, resized_y = self.image_size, int(y*self.image_size/x)
-        else:
-            resized_x, resized_y = int(x*self.image_size/y), self.image_size
-        # resize = Resize(resized_y, resized_x)
-        # image = resize(image=image)["image"]
-        image = cv2.resize(image, (resized_x, resized_y), interpolation=cv2.INTER_LINEAR)
-        image = np.pad(image, [[0, self.image_size - resized_y], [0, self.image_size - resized_x], [0, 0]], 'constant', constant_values=0)
-        image =self.transform(image)
-        image = (image - 0.5) / 0.5
-
-        return image #for 1-output, sigmoid, BCE
-    def __len__(self):
-        return len(self.imagePaths)

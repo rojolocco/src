@@ -8,6 +8,7 @@ import sys
 
 __all__ = ['InceptionV4', 'inceptionvF']
 
+
 pretrained_settings = {
     'inceptionv4': {
         'imagenet': {

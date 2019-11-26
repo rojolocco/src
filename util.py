@@ -1,19 +1,22 @@
 
-import torch.nn as nn
-import re
-import torch
-import torchvision.transforms as transforms
-# from sklearn.metrics import  roc_curve, auc
+import sys
 import math
 import numpy as np
+import re
 # import time
 # import os
 # from PIL import Image
+
+import torch
+import torch.nn as nn
+import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
+from sklearn.metrics import  roc_curve, auc
+
 from read_data_challenge import CheXpertDataSet14,CheXpertDataSet_GCN, CheXpert
 from se_dense_gcn import SE_GCN_DenseNet121
 from models import Xception,NasNet,pNasNet,SEnet,InceptionV4,Xception_SA,Pnasnet_SA,Xception_FPN, Xception_GCN
-import sys
+
 
 def get_model():
 
@@ -25,6 +28,7 @@ def get_model():
     # best_model = nn.Sequential(best_model, nn.Sigmoid())
     return model
 
+
 def get_NASmodel():
 
     model = NasNet(14).cuda()
@@ -34,6 +38,8 @@ def get_NASmodel():
     # model.load_state_dict(best_model)
     # best_model = nn.Sequential(best_model, nn.Sigmoid())
     return model
+
+
 def get_pNASmodel():
 
     model = pNasNet(14).cuda()
@@ -44,6 +50,7 @@ def get_pNASmodel():
     # best_model = nn.Sequential(best_model, nn.Sigmoid())
     return model
 
+
 def get_pNASSAmodel():
     pNasSA_model = Pnasnet_SA(14).cuda()
     model = torch.nn.DataParallel(pNasSA_model).cuda()
@@ -52,6 +59,8 @@ def get_pNASSAmodel():
     # model.load_state_dict(best_model)
     # best_model = nn.Sequential(best_model, nn.Sigmoid())
     return model
+
+
 def get_SENETmodel():
 
     model = SEnet(14).cuda()
@@ -61,17 +70,22 @@ def get_SENETmodel():
     # model.load_state_dict(best_model)
     # best_model = nn.Sequential(best_model, nn.Sigmoid())
     return model
+
+
 def get_IncepV4model():
 
     model = InceptionV4(14).cuda()
     model = torch.nn.DataParallel(model).cuda()
 
     return model
+
+
 def get_xCeptionSAmodel():
 
     model = Xception_SA(14).cuda()
     model = torch.nn.DataParallel(model).cuda()
     return model
+
 
 def get_xception_gcn_model():
 
@@ -83,6 +97,7 @@ def get_xception_gcn_model():
     # best_model = nn.Sequential(best_model, nn.Sigmoid())
     return model
 
+
 def get_xCeptionFPNmodel():
 
     model = Xception_FPN(14).cuda()
@@ -92,6 +107,8 @@ def get_xCeptionFPNmodel():
     # model.load_state_dict(best_model)
     # best_model = nn.Sequential(best_model, nn.Sigmoid())
     return model
+
+
 def get_dataload(test_list,size=448):
     normalize = transforms.Normalize([0.485, 0.456, 0.406],
                                      [0.229, 0.224, 0.225])
@@ -106,6 +123,7 @@ def get_dataload(test_list,size=448):
                              shuffle=False, num_workers=4, pin_memory=True)
     return test_loader
 
+
 def get_dataset(test_list,size=680):
     test_dataset = CheXpert(image_list_file=test_list,
                                     transform=transforms.Compose([
@@ -115,7 +133,6 @@ def get_dataset(test_list,size=680):
     test_loader = DataLoader(dataset=test_dataset, batch_size=1,
                              shuffle=False, num_workers=4, pin_memory=True)
     return test_loader
-
 
 
 def compute_roc(targets, probs, label_names):

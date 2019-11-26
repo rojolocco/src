@@ -1,12 +1,14 @@
-import math
-from urllib.request import urlretrieve
-import torch
-from PIL import Image
-# from tqdm import tqdm
 import numpy as np
 import random
 import pandas as pd
+import math
+from urllib.request import urlretrieve
+from PIL import Image
+# from tqdm import tqdm
+
+import torch
 import torch.nn.functional as F
+
 
 def gen_adj_num(csv_path='train.csv',t=0.4):
     df_valid = pd.read_csv(csv_path)
@@ -42,6 +44,7 @@ def gen_adj_num(csv_path='train.csv',t=0.4):
     _adj = _adj + np.identity(number_labels, np.int)
     return _adj
 
+
 class Warp(object):
     def __init__(self, size, interpolation=Image.BILINEAR):
         self.size = int(size)
@@ -53,6 +56,7 @@ class Warp(object):
     def __str__(self):
         return self.__class__.__name__ + ' (size={size}, interpolation={interpolation})'.format(size=self.size,
                                                                                                 interpolation=self.interpolation)
+
 class MultiScaleCrop(object):
 
     def __init__(self, input_size, scales=None, max_distort=1, fix_crop=True, more_fix_crop=True):
@@ -126,47 +130,6 @@ class MultiScaleCrop(object):
 
     def __str__(self):
         return self.__class__.__name__
-
-
-# def download_url(url, destination=None, progress_bar=True):
-#     """Download a URL to a local file.
-#
-#     Parameters
-#     ----------
-#     url : str
-#         The URL to download.
-#     destination : str, None
-#         The destination of the file. If None is given the file is saved to a temporary directory.
-#     progress_bar : bool
-#         Whether to show a command-line progress bar while downloading.
-#
-#     Returns
-#     -------
-#     filename : str
-#         The location of the downloaded file.
-#
-#     Notes
-#     -----
-#     Progress bar use/example adapted from tqdm documentation: https://github.com/tqdm/tqdm
-#     """
-#
-#     def my_hook(t):
-#         last_b = [0]
-#
-#         def inner(b=1, bsize=1, tsize=None):
-#             if tsize is not None:
-#                 t.total = tsize
-#             if b > 0:
-#                 t.update((b - last_b[0]) * bsize)
-#             last_b[0] = b
-#
-#         return inner
-#
-#     if progress_bar:
-#         with tqdm(unit='B', unit_scale=True, miniters=1, desc=url.split('/')[-1]) as t:
-#             filename, _ = urlretrieve(url, filename=destination, reporthook=my_hook(t))
-#     else:
-#         filename, _ = urlretrieve(url, filename=destination)
 
 
 class AveragePrecisionMeter(object):
@@ -356,3 +319,43 @@ def gen_adj(A):
     D = torch.diag(D)
     adj = torch.matmul(torch.matmul(A, D).t(), D)
     return adj
+
+# def download_url(url, destination=None, progress_bar=True):
+#     """Download a URL to a local file.
+#
+#     Parameters
+#     ----------
+#     url : str
+#         The URL to download.
+#     destination : str, None
+#         The destination of the file. If None is given the file is saved to a temporary directory.
+#     progress_bar : bool
+#         Whether to show a command-line progress bar while downloading.
+#
+#     Returns
+#     -------
+#     filename : str
+#         The location of the downloaded file.
+#
+#     Notes
+#     -----
+#     Progress bar use/example adapted from tqdm documentation: https://github.com/tqdm/tqdm
+#     """
+#
+#     def my_hook(t):
+#         last_b = [0]
+#
+#         def inner(b=1, bsize=1, tsize=None):
+#             if tsize is not None:
+#                 t.total = tsize
+#             if b > 0:
+#                 t.update((b - last_b[0]) * bsize)
+#             last_b[0] = b
+#
+#         return inner
+#
+#     if progress_bar:
+#         with tqdm(unit='B', unit_scale=True, miniters=1, desc=url.split('/')[-1]) as t:
+#             filename, _ = urlretrieve(url, filename=destination, reporthook=my_hook(t))
+#     else:
+#         filename, _ = urlretrieve(url, filename=destination)
