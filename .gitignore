@@ -3,4 +3,4 @@ vscode/
 env/
 all_models/
 __pycache__/
-trash/
+temp/

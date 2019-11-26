@@ -27,26 +27,26 @@ def main(argv):
 
     valid_dataloder, Nas_dataloder, Atel_dataloader, dataset_loader = get_all_data(TEST_IMAGE_LIST)
     
-    model_list = {'u2_file':'0.8990708733759138.pth',
-                'u5_file':'0.8933122711473276.pth',
-                'u6_file':'0.8918464376816251.pth',
-                'u7_file':'0.8685262236170553.pth',
-                'u8_file':'xcepdualexpsimat.pth',
-                'u9_file':'xcepdualsumsimat.pth',
-                'u10_file':'0.8960423659716028.pth',
-                'u11_file':'0.8901343376820208.pth',
-                'u12_file':'0.885028055543075.pth',
-                'u13_file':'xcupdualesimscaleat.pth',
-                'u14_file':'xcupdualesimscaleat.pth',
-                'u15_file':'0.8877043778295596.pth',
-                'u16_file':'0.8743647271509183.pth',
-                'u17_file':'0.8932593746041071.pth',
-                'u18_file':'0.8997462889772881.pth',
-                'u19_file':'0.8988146931955356.pth',
-                'u20_file':'0.8952064212757506.pth',
-                'u21_file':'DR_cls_index_227.pth',
-                'u22_file':'DR_cls_index_113.pth',
-                'u23_file':'DR_cls_0.869_0.909.pth'}
+    model_list = {  'u2_file': [model,         valid_dataloder, '0.8990708733759138.pth'],
+                    'u5_file': [pNas_model,    Nas_dataloder,   '0.8933122711473276.pth'],
+                    'u6_file': [pNas_model,    Nas_dataloder,   '0.8918464376816251.pth'],
+                    'u7_file': [pNas_model,    Nas_dataloder,   '0.8685262236170553.pth'],
+                    'u8_file': [SA_model,      valid_dataloder, 'xcepdualexpsimat.pth'],
+                    'u9_file': [SA_model,      valid_dataloder, 'xcepdualsumsimat.pth'],
+                    'u10_file':[SA_model,      valid_dataloder, '0.8960423659716028.pth'],
+                    'u11_file':[SA_model,      valid_dataloder, '0.8901343376820208.pth'],
+                    'u12_file':[pNasSA_model,  Nas_dataloder,   '0.885028055543075.pth'],
+                    'u13_file':[SA_model,      valid_dataloder, 'xcupdualesimscaleat.pth'],
+                    'u14_file':[SA_model,      Atel_dataloader, 'xcupdualesimscaleat.pth'],
+                    'u15_file':[model,         valid_dataloder, '0.8877043778295596.pth'],
+                    'u16_file':[XcepFPN_model, valid_dataloder, '0.8743647271509183.pth'],
+                    'u17_file':[XcepFPN_model, valid_dataloder, '0.8932593746041071.pth'],
+                    'u18_file':[SA_model,      valid_dataloder, '0.8997462889772881.pth'],
+                    'u19_file':[SA_model,      valid_dataloder, '0.8988146931955356.pth'],
+                    'u20_file':[XcepFPN_model, valid_dataloder, '0.8952064212757506.pth'],
+                    'u21_file':[SA_model,      dataset_loader,  'DR_cls_index_227.pth'],
+                    'u22_file':[SA_model,      dataset_loader,  'DR_cls_index_113.pth'],
+                    'u23_file':[xception_gcn,  dataset_loader,  'DR_cls_0.869_0.909.pth']}
 
 
     print('load models & data success!')
@@ -56,8 +56,8 @@ def main(argv):
 
     for k,v in model_list.items():
         value = k.split("_")[0][1:]
-        model_file = os.path.join(models_dict, model_list[k])
-        y_predU = pre_single_model(model, valid_dataloder, model_file)  # (234,14)
+        model_file = os.path.join(models_dict, v[2])
+        y_predU = pre_single_model(v[0], v[1], model_file)  # (234,14)
         y_predU_list.update({f'y_predU{value}': y_predU})
     
 
