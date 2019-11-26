@@ -1,6 +1,7 @@
 # encoding: utf-8
 import sys
 import os
+import timeit
 
 import numpy as np
 import pandas as pd
@@ -54,12 +55,14 @@ def main(argv):
 
     y_predU_list = {}
 
+    start = timeit.default_timer()
     for k,v in model_list.items():
         value = k.split("_")[0][1:]
         model_file = os.path.join(models_dict, v[2])
         y_predU = pre_single_model(v[0], v[1], model_file)  # (234,14)
         y_predU_list.update({f'y_predU{value}': y_predU})
-    
+    stop = timeit.default_timer()
+    print('Prediction Time: ', stop - start) 
 
 
     y_predU_list['y_predU21'][:, 2] = (y_predU_list['y_predU21'][:, 2] + y_predU_list['y_predU21'][:, 1]) / 2
@@ -80,7 +83,7 @@ def main(argv):
         else:
             Cardiomegaly_mean.append(mean_car[i])
     
-    Edema_mean = np.concatenate((y_predU_list['y_predU17'][:, 5, np.newaxis], y_predU_list['y_predU11'][:, 5, np.newaxis],y_predU_list[' y_predU10'][:, 5, np.newaxis],
+    Edema_mean = np.concatenate((y_predU_list['y_predU17'][:, 5, np.newaxis], y_predU_list['y_predU11'][:, 5, np.newaxis],y_predU_list['y_predU10'][:, 5, np.newaxis],
                                  y_predU_list['y_predU18'][:, 5, np.newaxis], y_predU_list['y_predU20'][:, 5, np.newaxis]), axis=1)
     Edema_mean = np.mean(Edema_mean, axis=1)
     
@@ -88,11 +91,11 @@ def main(argv):
         (y_predU_list['y_predU6'][:, 6, np.newaxis], y_predU_list['y_predU7'][:, 6, np.newaxis], y_predU_list['y_predU15'][:, 6, np.newaxis]), axis=1)
     Consolidation_mean = np.mean(Consolidation_mean, axis=1)
     
-    Atelectasis_mean = np.concatenate((y_predU_list['y_predU8'][:, 8, np.newaxis],y_predU_list[' y_predU14'][:, 8, np.newaxis],
-                                      y_predU_list[' y_predU9'][:, 8, np.newaxis], y_predU_list['y_predU13'][:, 8, np.newaxis]), axis=1)
+    Atelectasis_mean = np.concatenate((y_predU_list['y_predU8'][:, 8, np.newaxis],y_predU_list['y_predU14'][:, 8, np.newaxis],
+                                      y_predU_list['y_predU9'][:, 8, np.newaxis], y_predU_list['y_predU13'][:, 8, np.newaxis]), axis=1)
     Atelectasis_mean = np.mean(Atelectasis_mean, axis=1)
     
-    Pleural_Effusion_mean = np.concatenate((y_predU_list['y_predU5'][:, 10, np.newaxis],y_predU_list[' y_predU12'][:, 10, np.newaxis]), axis=1)
+    Pleural_Effusion_mean = np.concatenate((y_predU_list['y_predU5'][:, 10, np.newaxis],y_predU_list['y_predU12'][:, 10, np.newaxis]), axis=1)
     Pleural_Effusion_mean = np.mean(Pleural_Effusion_mean, axis=1)
     
     ensemble_prediction = np.zeros_like(y_predU_list['y_predU2'],dtype=np.float32)
