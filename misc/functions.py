@@ -11,7 +11,7 @@ from misc.util import get_dataload, get_dataset
 from misc.util import get_model
 from misc.util import get_pNASmodel, get_pNASSAmodel
 from misc.util import get_xCeptionSAmodel, get_xCeptionFPNmodel, get_xception_gcn_model
-from misc.functions import predict_positive, pre_single_model, predict_csvfile
+
 
 def predict_positive(model, device, data_loader):
     model.eval()
