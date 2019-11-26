@@ -7,6 +7,12 @@ import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
 
+from misc.util import get_dataload, get_dataset
+from misc.util import get_model
+from misc.util import get_pNASmodel, get_pNASSAmodel
+from misc.util import get_xCeptionSAmodel, get_xCeptionFPNmodel, get_xception_gcn_model
+from misc.functions import predict_positive, pre_single_model, predict_csvfile
+
 def predict_positive(model, device, data_loader):
     model.eval()
     # return a List of probabilities
@@ -82,3 +88,21 @@ def predict_csvfile(prediction_np, input_file, output_file):
     pred_df = pd.DataFrame(prediction_np)
     pred_df.columns = ['Study', 'Atelectasis', 'Cardiomegaly', 'Consolidation', 'Edema', 'Pleural Effusion']
     pred_df.to_csv(output_file, index=False)
+
+def get_all_models():
+    model = get_model()
+    pNas_model = get_pNASmodel()
+    SA_model = get_xCeptionSAmodel()
+    pNasSA_model = get_pNASSAmodel()
+    XcepFPN_model = get_xCeptionFPNmodel()
+    xception_gcn = get_xception_gcn_model()
+
+    return model, pNas_model, SA_model, pNasSA_model, XcepFPN_model, xception_gcn
+
+def get_all_data(TEST_IMAGE_LIST):
+    valid_dataloder = get_dataload(TEST_IMAGE_LIST,size=680)
+    Nas_dataloder = get_dataload(TEST_IMAGE_LIST, size=331)
+    Atel_dataloader = get_dataload(TEST_IMAGE_LIST, size=800)
+    dataset_loader = get_dataset(TEST_IMAGE_LIST, size=680)
+
+    return valid_dataloder, Nas_dataloder, Atel_dataloader, dataset_loader
