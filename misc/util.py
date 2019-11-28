@@ -1,4 +1,3 @@
-
 import sys
 import math
 import numpy as np
@@ -21,92 +20,109 @@ from arch.models import Xception_SA, Pnasnet_SA, Xception_FPN, Xception_GCN
 
 def get_model():
 
-    model = Xception(14).cuda()
-    model = torch.nn.DataParallel(model).cuda()
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model = Xception(14)
+    model.to(device)
 
-    # best_model = torch.load("GCN_densenet_states.pth")
-    # model.load_state_dict(best_model)
-    # best_model = nn.Sequential(best_model, nn.Sigmoid())
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model).cuda()
+   
     return model
 
 
 def get_NASmodel():
 
-    model = NasNet(14).cuda()
-    model = torch.nn.DataParallel(model).cuda()
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model = NasNet(14)
+    model.to(device)
 
-    # best_model = torch.load("GCN_densenet_states.pth")
-    # model.load_state_dict(best_model)
-    # best_model = nn.Sequential(best_model, nn.Sigmoid())
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model).cuda()
+    
     return model
 
 
 def get_pNASmodel():
 
-    model = pNasNet(14).cuda()
-    model = torch.nn.DataParallel(model).cuda()
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model = pNasNet(14)
+    model.to(device)
 
-    # best_model = torch.load("GCN_densenet_states.pth")
-    # model.load_state_dict(best_model)
-    # best_model = nn.Sequential(best_model, nn.Sigmoid())
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model).cuda()
+
     return model
 
 
 def get_pNASSAmodel():
-    pNasSA_model = Pnasnet_SA(14).cuda()
-    model = torch.nn.DataParallel(pNasSA_model).cuda()
 
-    # best_model = torch.load("GCN_densenet_states.pth")
-    # model.load_state_dict(best_model)
-    # best_model = nn.Sequential(best_model, nn.Sigmoid())
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model = Pnasnet_SA(14).cuda()
+    model.to(device)
+
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model).cuda()
+        
     return model
 
 
 def get_SENETmodel():
 
-    model = SEnet(14).cuda()
-    model = torch.nn.DataParallel(model).cuda()
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model = SEnet(14)
+    model.to(device)
 
-    # best_model = torch.load("GCN_densenet_states.pth")
-    # model.load_state_dict(best_model)
-    # best_model = nn.Sequential(best_model, nn.Sigmoid())
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model).cuda()
+
     return model
 
 
 def get_IncepV4model():
 
-    model = InceptionV4(14).cuda()
-    model = torch.nn.DataParallel(model).cuda()
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model = InceptionV4(14)
+    model.to(device)
+
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model).cuda()
 
     return model
 
 
 def get_xCeptionSAmodel():
 
-    model = Xception_SA(14).cuda()
-    model = torch.nn.DataParallel(model).cuda()
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model = Xception_SA(14)
+    model.to(device)
+
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model).cuda()
+    
     return model
 
 
 def get_xception_gcn_model():
 
-    model = Xception_GCN(14).cuda()
-    model = torch.nn.DataParallel(model).cuda()
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model = Xception_GCN(14)
+    model.to(device)
 
-    # best_model = torch.load("GCN_densenet_states.pth")
-    # model.load_state_dict(best_model)
-    # best_model = nn.Sequential(best_model, nn.Sigmoid())
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model).cuda()
+
     return model
 
 
 def get_xCeptionFPNmodel():
 
-    model = Xception_FPN(14).cuda()
-    model = torch.nn.DataParallel(model).cuda()
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model = Xception_FPN(14)
+    model.to(device)
 
-    # best_model = torch.load("GCN_densenet_states.pth")
-    # model.load_state_dict(best_model)
-    # best_model = nn.Sequential(best_model, nn.Sigmoid())
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model).cuda()
+
     return model
 
 

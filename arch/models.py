@@ -32,7 +32,7 @@ class Xception(nn.Module):
         x = self.xception(x)
         x = self.classifier(x)
         # we don't include sigmoid layer here
-        return x#.reshape([len(x), self.num_labels, self.num_classes])
+        return x #.reshape([len(x), self.num_labels, self.num_classes])
 
 
 class NasNet(nn.Module):
