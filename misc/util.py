@@ -24,7 +24,7 @@ def get_model():
     model = Xception(14)
     model.to(device)
 
-    if torch.cuda.device_count() > 1:
+    if torch.cuda.device_count() >= 1:
         model = torch.nn.DataParallel(model).cuda()
    
     return model
@@ -36,7 +36,7 @@ def get_NASmodel():
     model = NasNet(14)
     model.to(device)
 
-    if torch.cuda.device_count() > 1:
+    if torch.cuda.device_count() >= 1:
         model = torch.nn.DataParallel(model).cuda()
     
     return model
@@ -48,7 +48,7 @@ def get_pNASmodel():
     model = pNasNet(14)
     model.to(device)
 
-    if torch.cuda.device_count() > 1:
+    if torch.cuda.device_count() >= 1:
         model = torch.nn.DataParallel(model).cuda()
 
     return model
@@ -57,10 +57,10 @@ def get_pNASmodel():
 def get_pNASSAmodel():
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model = Pnasnet_SA(14).cuda()
+    model = Pnasnet_SA(14)
     model.to(device)
 
-    if torch.cuda.device_count() > 1:
+    if torch.cuda.device_count() >= 1:
         model = torch.nn.DataParallel(model).cuda()
         
     return model
@@ -72,7 +72,7 @@ def get_SENETmodel():
     model = SEnet(14)
     model.to(device)
 
-    if torch.cuda.device_count() > 1:
+    if torch.cuda.device_count() >= 1:
         model = torch.nn.DataParallel(model).cuda()
 
     return model
@@ -84,7 +84,7 @@ def get_IncepV4model():
     model = InceptionV4(14)
     model.to(device)
 
-    if torch.cuda.device_count() > 1:
+    if torch.cuda.device_count() >= 1:
         model = torch.nn.DataParallel(model).cuda()
 
     return model
@@ -96,7 +96,7 @@ def get_xCeptionSAmodel():
     model = Xception_SA(14)
     model.to(device)
 
-    if torch.cuda.device_count() > 1:
+    if torch.cuda.device_count() >= 1:
         model = torch.nn.DataParallel(model).cuda()
     
     return model
@@ -108,7 +108,7 @@ def get_xception_gcn_model():
     model = Xception_GCN(14)
     model.to(device)
 
-    if torch.cuda.device_count() > 1:
+    if torch.cuda.device_count() >= 1:
         model = torch.nn.DataParallel(model).cuda()
 
     return model
@@ -120,7 +120,7 @@ def get_xCeptionFPNmodel():
     model = Xception_FPN(14)
     model.to(device)
 
-    if torch.cuda.device_count() > 1:
+    if torch.cuda.device_count() >= 1:
         model = torch.nn.DataParallel(model).cuda()
 
     return model

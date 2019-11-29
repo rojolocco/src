@@ -72,6 +72,7 @@ def main(argv):
                                 y_predU_list['y_predU19'][:, 2, np.newaxis], y_predU_list['y_predU21'][:, 2, np.newaxis], 
                                 y_predU_list['y_predU22'][:, 2, np.newaxis], y_predU_list['y_predU23'][:, 2, np.newaxis]), axis=1)
 
+#https://drive.google.com/file/d/1Rx5crF94lJUaPVL6RAXy9dM8Grpw1yCX/view?usp=sharing
     std_car = np.std(Cardiom, axis=1)
     mean_car = np.mean(Cardiom, axis=1)
     Cardiomegaly_mean = []
