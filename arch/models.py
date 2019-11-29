@@ -91,6 +91,7 @@ class pNasNet(nn.Module):
         # x = self.classifier(x)
         # we don't include sigmoid layer here
         return x#.reshape([len(x), self.num_labels, self.num_classes])
+
 def conv3x3(in_planes, out_planes, stride=1):
     """3x3 convolution with padding"""
     return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,

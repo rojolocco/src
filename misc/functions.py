@@ -36,9 +36,14 @@ def predict_positive(model, device, data_loader):
     return probas
 
 def pre_single_model(model,test_loader,model_file):
-    best_model = torch.load(model_file)
-    model.load_state_dict(best_model)
-    device = torch.device("cuda")
+    if torch.cuda.device_count() >= 1:
+        best_model = torch.load(model_file)
+        model.load_state_dict(best_model)
+    else:
+        best_model = torch.load(model_file ,map_location=torch.device('cpu'))
+        model.load_state_dict(best_model ,strict=False)
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    # device = torch.device("cuda")
     probas=predict_positive(model,device,test_loader)
     return probas
 
