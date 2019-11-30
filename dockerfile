@@ -19,7 +19,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zsh \
     htop \
     software-properties-common \
-    tzdata \
     locales \
     openssh-server \
     xauth \
