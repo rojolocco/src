@@ -208,7 +208,7 @@ class Xception(nn.Module):
 def xception(num_classes=1000, pretrained='imagenet'):
     model = Xception(num_classes=num_classes)
     if pretrained:
-        settings = pretrained_settings['xception']#[pretrained]
+        settings = pretrained_settings['xception'][pretrained]
         assert num_classes == settings['num_classes'], \
             "num_classes should be {}, but is {}".format(settings['num_classes'], num_classes)
 
