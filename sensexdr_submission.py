@@ -85,7 +85,7 @@ def main(argv):
             Cardiomegaly_mean.append(mean_car[i])
     
     Edema_mean = np.concatenate((y_predU_list['y_predU17'][:, 5, np.newaxis], y_predU_list['y_predU11'][:, 5, np.newaxis],y_predU_list['y_predU10'][:, 5, np.newaxis],
-                                 y_predU_list['y_predU18'][:, 5, np.newaxis], y_predU_list['y_predU20'][:, 5, np.newaxis]), axis=1)
+                                y_predU_list['y_predU18'][:, 5, np.newaxis], y_predU_list['y_predU20'][:, 5, np.newaxis]), axis=1)
     Edema_mean = np.mean(Edema_mean, axis=1)
     
     Consolidation_mean = np.concatenate(
@@ -93,7 +93,7 @@ def main(argv):
     Consolidation_mean = np.mean(Consolidation_mean, axis=1)
     
     Atelectasis_mean = np.concatenate((y_predU_list['y_predU8'][:, 8, np.newaxis],y_predU_list['y_predU14'][:, 8, np.newaxis],
-                                      y_predU_list['y_predU9'][:, 8, np.newaxis], y_predU_list['y_predU13'][:, 8, np.newaxis]), axis=1)
+                                    y_predU_list['y_predU9'][:, 8, np.newaxis], y_predU_list['y_predU13'][:, 8, np.newaxis]), axis=1)
     Atelectasis_mean = np.mean(Atelectasis_mean, axis=1)
     
     Pleural_Effusion_mean = np.concatenate((y_predU_list['y_predU5'][:, 10, np.newaxis],y_predU_list['y_predU12'][:, 10, np.newaxis]), axis=1)
