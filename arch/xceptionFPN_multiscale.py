@@ -129,7 +129,7 @@ class Xception_drop(nn.Module):
             DropBlock2D(drop_prob=drop_prob, block_size=block_size),
             start_value=0.,
             stop_value=drop_prob,
-            nr_steps=5e3
+            nr_steps=int(5e3)
         )
         self.block1=Block(64,128,2,2,start_with_relu=False,grow_first=True)
         self.block2=Block(128,256,2,2,start_with_relu=True,grow_first=True)
